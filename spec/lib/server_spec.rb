@@ -98,6 +98,6 @@ describe Server, 'delete a character (DELETE /characters/:id)' do
   
   it "deletes the record" do
     @database.reload!
-    @database.members.map{|record| record['name']}.should_not include(character.name)
+    @database.members.map{|record| record['name']}.should_not include(character['name'])
   end
 end
