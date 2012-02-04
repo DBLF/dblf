@@ -24,7 +24,7 @@ describe Server, 'list characters (GET /characters)' do
   it "returns saved characters" do
     characters = JSON.parse(last_response.body)
     characters.length.should > 0
-    characters.length = @database.members.length
+    characters.length.should == @database.members.length
     characters.map{|record| record['name']}.should include('first character')
   end
 end
@@ -43,7 +43,7 @@ describe Server, 'create character (POST /characters)' do
   it "returns the created character" do
     saved_character = JSON.parse(last_response.body)
     saved_character['name'].should == "new character"
-    saved_character['id'].should_not be_null
+    saved_character['id'].should_not be_nil
   end
 end
 
@@ -57,7 +57,7 @@ describe Server, 'get a character (GET /characters/:id)' do
 
   it "returns the specified character" do
     char = JSON.parse(last_response.body)
-    char['name'].should == character.name
+    char['name'].should == character[:name]
   end
 end
 
