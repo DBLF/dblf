@@ -24,3 +24,12 @@ desc "Interact with code in IRB."
 task :console do
   exec "irb -Ilib -rinit"
 end
+
+begin
+  require 'jasmine'
+  load 'jasmine/tasks/jasmine.rake'
+rescue LoadError
+  task :jasmine do
+    abort "Jasmine is not available. In order to run jasmine, you must: (sudo) gem install jasmine"
+  end
+end

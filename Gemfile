@@ -10,5 +10,8 @@ gem 'compass'
 group :test do
   gem 'rspec'
   gem 'rack-test'
+  gem 'jasmine'
   gem 'guard-rspec'
+  gem 'guard-jasmine-headless-webkit'
+  gem 'thin'
 end
