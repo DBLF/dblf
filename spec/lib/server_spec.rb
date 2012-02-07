@@ -14,13 +14,27 @@ describe Server, '/' do
   end
 end
 
-describe Server, 'list characters (GET /characters)' do
-  before { get "/api/characters" }
-  
+describe Server, '/characters/:id' do
+  before do
+    get '/characters/1'
+  end
+
   it "should be a success" do
     last_response.should be_success
   end
-  
+
+  it "should respond with HTML content type" do
+    last_response.headers['Content-Type'].should == "text/html;charset=utf-8"
+  end
+end
+
+describe Server, 'list characters (GET /characters)' do
+  before { get "/api/characters" }
+
+  it "should be a success" do
+    last_response.should be_success
+  end
+
   it "returns saved characters" do
     characters = JSON.parse(last_response.body)
     characters.length.should > 0
@@ -87,15 +101,15 @@ end
 describe Server, 'delete a character (DELETE /characters/:id)' do
   let(:character) { @database.members.first }
   before { delete "/api/characters/#{character['id']}" }
-  
+
   it "returns success" do
     last_response.should be_success
   end
-  
+
   it "returns empty array" do
     last_response.body.should == [].to_json
   end
-  
+
   it "deletes the record" do
     @database.reload!
     @database.members.map{|record| record['name']}.should_not include(character['name'])
