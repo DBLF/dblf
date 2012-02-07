@@ -7,6 +7,8 @@ src_files:
   - public/javascripts/application/models.js
   - public/javascripts/application/collections.js
   - public/javascripts/application/views.js
+  - public/javascripts/application/routers.js
+  - public/javascripts/application/application.js
 stylesheets:
 helpers:
   - helpers/**/*.js
