@@ -1,7 +1,17 @@
 template_function: _.template
-template_namespace: app.templates
+template_namespace: window.app.templates
 gzip_assets: off
 
 javascripts:
-  test:
+  application:
+    - public/javascripts/vendor/jquery*.js
+    - public/javascripts/vendor/underscore*.js
+    - public/javascripts/vendor/backbone*.js
+    - public/javascripts/preload/**/*.js
+    - public/javascripts/application/models.js
+    - public/javascripts/application/collections.js
+    - public/javascripts/application/views.js
+    - public/javascripts/application/routers.js
+    - public/javascripts/application/application.js
+  templates:
     - app/views/templates/*.jst

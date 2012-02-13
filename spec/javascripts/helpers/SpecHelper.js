@@ -59,11 +59,17 @@ function setupRouter() {
     try {
       Backbone.history.start({silent: true, pushState: true});
     } catch (e) {
+      spec.currentRouter.navigate("unmatched route");
     }
-    spec.currentRouter.navigate("unmatched route");
   });
 
   afterEach(function() {
     delete spec.currentRouter;
+  });
+}
+
+function defineFixture(html) {
+  beforeEach(function() {
+    setFixtures("<ul id='characters'/>");
   });
 }

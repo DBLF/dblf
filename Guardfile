@@ -7,6 +7,7 @@ end
 guard 'jammit' do
   watch(%r{public/javascripts/(.*)\.js})
   watch(%r{app/views/templates/(.*)\.jst})
+  watch(%r{config/assets.yml})
 end
 
 guard 'jasmine-headless-webkit' do

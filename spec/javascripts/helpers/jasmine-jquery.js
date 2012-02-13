@@ -210,7 +210,7 @@ jasmine.JQuery.matchersClass = {};
       return this.actual.is(selector);
     },
 
-    toContain: function(selector) {
+    toContainSelector: function(selector) {
       return this.actual.find(selector).size() > 0;
     },
 
