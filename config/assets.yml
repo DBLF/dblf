@@ -1,0 +1,7 @@
+template_function: _.template
+template_namespace: app.templates
+gzip_assets: off
+
+javascripts:
+  test:
+    - app/views/templates/*.jst

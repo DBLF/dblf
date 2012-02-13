@@ -1,15 +1,47 @@
 describe("routers", function() {
+  var router;
+
+  spyOnAjax();
+
   beforeEach(function() {
-    app.routers.reset();
     expect(app.routers.router).not.toBeDefined();
   });
 
-  afterEach(function() { app.routers.reset() });
-
   describe("initialize", function() {
-    it("should initialize a router", function() {
-      app.routers.init();
-      expect(app.routers.router).toBeDefined();
+    it("should return the initialized router", function() {
+      router = app.routers.init();
+      expect(router).toBeDefined();
+      expect(router).toBe(app.routers.router);
+    });
+  });
+
+  describe('routes', function() {
+    setupRouter();
+
+    describe('/', function() {
+      beforeEach(function() {
+        spec.currentRouter.bind("route:index", spec.ajaxSpy);
+        spec.currentRouter.navigate("", true);
+      });
+
+      it("routes to index", function() {
+        expect(spec.ajaxSpy.called).toBeTruthy();
+      });
+
+      it("fetches character data", function() {
+        expect(spec.ajaxSpy.getCall(0).args[0].url).toEqual('/api/characters');
+      });
+    });
+
+    describe('/characters/:id', function() {
+      beforeEach(function() {
+        spec.currentRouter.bind("route:show", spec.ajaxSpy);
+        spec.currentRouter.navigate("characters/1", true);
+      });
+
+      it("routes to show", function() {
+        expect(spec.ajaxSpy.called).toBeTruthy();
+      });
     });
   });
 });

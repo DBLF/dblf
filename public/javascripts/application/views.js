@@ -30,7 +30,7 @@ $.namespace("app.views");
       'click span': 'showCharacter'
     },
     initialize: function() {
-      this.template = _.template($('#character-list-template').html());
+      this.template = app.templates['character_list'];
     },
     render: function() {
       $(this.el).html(this.template(this.model.toJSON()));

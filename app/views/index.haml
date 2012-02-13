@@ -11,14 +11,10 @@
     %script{:type => "text/javascript", :src => "/javascripts/application/views.js"}
     %script{:type => "text/javascript", :src => "/javascripts/application/routers.js"}
     %script{:type => "text/javascript", :src => "/javascripts/application/application.js"}
+    %script{:type => "text/javascript", :src => "/assets/test.js"}
 
   %body
     %ul#characters
-
-:plain
-  <script type="text/template" id="character-list-template">
-    <span><%= name %></span>
-  </script>
 
 :javascript
   app.initialize();

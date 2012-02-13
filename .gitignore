@@ -1,3 +1,4 @@
 tmp
 .idea
 .jhw-cache
+public/assets/*.js

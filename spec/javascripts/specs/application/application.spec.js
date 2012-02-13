@@ -2,13 +2,7 @@ describe("dblf application", function() {
   describe("initialize", function() {
     beforeEach(function() {
       spyOn(Backbone.history, 'start');
-      spyOn(app.collections, 'init');
       spyOn(app.routers, 'init');
-    });
-
-    it("should initialize collections", function() {
-      app.initialize();
-      expect(app.collections.init).toHaveBeenCalled();
     });
 
     it("should initialize a router", function() {

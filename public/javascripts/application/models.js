@@ -2,11 +2,12 @@ $.namespace("app.models");
 
 (function($, self, $b) {
   var Character = $b.Model.extend({
-    initialize: function() {
-      this.url = this.setUrl();
-    },
-    setUrl: function() {
-      return "/api/characters/" + this.get('id');
+    validate: function(attrs) {
+      var errors = [];
+      if (!attrs.name) {
+        errors.push("name cannot be empty");
+      }
+      if (errors.length > 0) return errors;
     }
   });
 

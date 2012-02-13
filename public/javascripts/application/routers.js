@@ -9,23 +9,21 @@ $.namespace("app.routers");
     },
 
     initialize: function() {
-      if (app.collections.Characters) {
-        this.listView = new app.views.CharactersView({collection: app.collections.Characters});
-        app.collections.Characters.bind('change:currentCharacter', this.changeCharacter, this);
-      }
+      this.characters = new app.collections.Characters;
+      this.listView = new app.views.CharactersView({collection: this.characters});
+      this.characters.bind('change:currentCharacter', this.changeCharacter, this);
     },
 
     changeCharacter: function() {
-      var currentChar = app.collections.Characters.currentCharacter;
+      var currentChar = this.characters.currentCharacter;
       Backbone.history.navigate(currentChar.url.substring(5, 255), {trigger: true});
     },
 
     index: function() {
-      app.collections.Characters.fetch();
+      this.characters.fetch();
     },
 
     show: function(slug) {
-      console.log("showing character");
       // initialize CharacterView
     }
 
@@ -34,6 +32,7 @@ $.namespace("app.routers");
   self.extend({
     init: function() {
       self.router = new self.DBLFRouter();
+      return self.router;
     },
     reset: function() {
       delete self.router;

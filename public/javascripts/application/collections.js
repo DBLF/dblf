@@ -2,17 +2,16 @@ $.namespace("app.collections");
 
 (function($, $b, self) {
 
-  Characters = $b.Collection.extend({
-    url : "/api/characters",
-    model: app.models.Character
+  var Characters = $b.Collection.extend({
+    url: "/api/characters",
+    model: app.models.Character,
+    comparator: function(character) {
+      return character.get('name');
+    }
   });
 
   self.extend({
-    init: function(){
-      self.Characters = new Characters;
-    },
-    reset: function() {
-      delete self.Characters;
-    }
+    Characters: Characters
   });
-})(jQuery, window.Backbone, app.collections)
+
+})(jQuery, window.Backbone, app.collections);

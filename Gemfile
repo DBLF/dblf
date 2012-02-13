@@ -8,6 +8,7 @@ gem 'haml'
 gem 'foreman'
 
 gem 'compass'
+gem 'jammit'
 
 group :test do
   gem 'rspec'
@@ -15,6 +16,7 @@ group :test do
   gem 'jasmine'
   gem 'guard-rspec'
   gem 'guard-jasmine-headless-webkit'
+  gem 'guard-jammit'
   gem 'thin'
   gem 'growl'
 end
