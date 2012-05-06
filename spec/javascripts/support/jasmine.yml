@@ -9,7 +9,7 @@ src_files:
   - public/javascripts/application/collections.js
   - public/javascripts/application/views.js
   - public/javascripts/application/routers.js
-  - public/assets/*.js
+  - public/assets/templates.js
 stylesheets:
 helpers:
   - helpers/**/*.js
