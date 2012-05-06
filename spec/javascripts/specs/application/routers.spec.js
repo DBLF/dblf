@@ -21,7 +21,7 @@ describe("routers", function() {
 
     describe('/', function() {
       beforeEach(function() {
-        spec.currentRouter.bind("route:index", spec.ajaxSpy);
+        spec.currentRouter.on("route:index", spec.ajaxSpy);
         spec.currentRouter.navigate("", navigation_options);
       });
 
@@ -36,7 +36,7 @@ describe("routers", function() {
 
     describe('/characters/:id', function() {
       beforeEach(function() {
-        spec.currentRouter.bind("route:show", spec.ajaxSpy);
+        spec.currentRouter.on("route:show", spec.ajaxSpy);
         spec.currentRouter.navigate("characters/1", navigation_options);
       });
 

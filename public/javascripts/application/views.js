@@ -6,7 +6,7 @@ $.namespace("app.views");
     tagName: "ul",
     initialize: function(options) {
       this.setElement($('#characters'));
-      this.collection.bind("reset", this.render, this);
+      this.collection.on("reset", this.render, this);
 
       this.characterAddView = new self.AddView;
     },

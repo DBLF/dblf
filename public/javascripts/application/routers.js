@@ -11,7 +11,7 @@ $.namespace("app.routers");
     initialize: function() {
       this.characters = new app.collections.Characters;
       this.listView = new app.views.CharactersView({collection: this.characters});
-      this.characters.bind('change:currentCharacter', this.changeCharacter, this);
+      this.characters.on('change:currentCharacter', this.changeCharacter, this);
     },
 
     changeCharacter: function() {
