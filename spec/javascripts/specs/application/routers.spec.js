@@ -1,7 +1,8 @@
 describe("routers", function() {
-  var router;
+  var router,
+    navigation_options = {trigger: true, replace: false};
 
-  spyOnAjax();
+  stubAjax();
 
   beforeEach(function() {
     expect(app.routers.router).not.toBeDefined();
@@ -21,7 +22,7 @@ describe("routers", function() {
     describe('/', function() {
       beforeEach(function() {
         spec.currentRouter.bind("route:index", spec.ajaxSpy);
-        spec.currentRouter.navigate("", true);
+        spec.currentRouter.navigate("", navigation_options);
       });
 
       it("routes to index", function() {
@@ -36,7 +37,7 @@ describe("routers", function() {
     describe('/characters/:id', function() {
       beforeEach(function() {
         spec.currentRouter.bind("route:show", spec.ajaxSpy);
-        spec.currentRouter.navigate("characters/1", true);
+        spec.currentRouter.navigate("characters/1", navigation_options);
       });
 
       it("routes to show", function() {

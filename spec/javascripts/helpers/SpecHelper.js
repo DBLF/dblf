@@ -53,14 +53,25 @@ function spyOnAjax() {
   });
 }
 
+function stubAjax() {
+  beforeEach(function() {
+    spec.ajaxSpy = sinon.stub(jQuery, 'ajax').returns(true);
+  });
+
+  afterEach(function() {
+    jQuery.ajax.restore();
+    delete spec.ajaxSpy;
+  });
+}
+
 function setupRouter() {
   beforeEach(function() {
     spec.currentRouter = app.routers.init();
     try {
       Backbone.history.start({silent: true, pushState: true});
     } catch (e) {
-      spec.currentRouter.navigate("unmatched route");
     }
+    spec.currentRouter.navigate("unmatched route");
   });
 
   afterEach(function() {
