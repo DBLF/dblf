@@ -14,6 +14,7 @@ group :test do
   gem 'rspec'
   gem 'rack-test'
   gem 'jasmine'
+  gem 'jasmine-headless-webkit', :git => 'git://github.com/johnbintz/jasmine-headless-webkit.git', :branch => 'master'
   gem 'guard-rspec'
   gem 'guard-jasmine-headless-webkit'
   gem 'guard-jammit'
