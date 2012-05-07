@@ -5,26 +5,29 @@ $.namespace("app.routers");
   self.DBLFRouter = $b.Router.extend({
     routes: {
       '': 'index',
-      'characters/:slug': 'show'
+      'characters/:id': 'show'
     },
 
     initialize: function() {
       this.characters = new app.collections.Characters;
       this.listView = new app.views.CharactersView({collection: this.characters});
-      this.characters.on('change:currentCharacter', this.changeCharacter, this);
-    },
-
-    changeCharacter: function() {
-      var currentChar = this.characters.currentCharacter;
-      Backbone.history.navigate(currentChar.url.substring(5, 255), {trigger: true});
-    },
-
-    index: function() {
+      this.characters.on('change:currentCharacterId', this.changeCharacter, this);
       this.characters.fetch();
     },
 
-    show: function(slug) {
-      // initialize CharacterView
+    changeCharacter: function() {
+      var char_id = this.characters.currentCharacter;
+      Backbone.history.navigate("characters/"+char_id, {trigger: true});
+    },
+
+    index: function() {
+    },
+
+    show: function(id) {
+      this.character = new app.models.Character;
+      this.character.id = id;
+      this.characterView = new app.views.CharacterView({model: this.character});
+      this.character.fetch();
     }
 
   });

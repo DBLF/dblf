@@ -2,6 +2,7 @@ $.namespace("app.models");
 
 (function($, self, $b) {
   var Character = $b.Model.extend({
+    urlRoot: "/api/characters",
     validate: function(attrs) {
       var errors = [];
       if (!attrs.name) {

@@ -6,8 +6,23 @@ describe("models", function() {
   });
 
   describe("character", function() {
+    var character;
+
+    describe('properties', function() {
+      stubAjax();
+
+      beforeEach(function() {
+        character = new app.models.Character();
+      });
+
+      it("should have a correctly set URL", function() {
+        character.id = 5;
+        expect(character.url()).toEqual("/api/characters/5");
+      });
+    });
+
     describe("validations", function() {
-      var validationSpy, character;
+      var validationSpy;
 
       beforeEach(function() {
         validationSpy = jasmine.createSpy();

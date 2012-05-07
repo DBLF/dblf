@@ -27,7 +27,7 @@ $.namespace("app.views");
   self.CharacterListView = $b.View.extend({
     tagName: "li",
     events: {
-      'click span': 'showCharacter'
+      'click': 'showCharacter'
     },
     initialize: function() {
       this.template = app.templates['character_list'];
@@ -37,8 +37,30 @@ $.namespace("app.views");
       return this;
     },
     showCharacter: function(event) {
-      this.collection.currentCharacter = this.model;
-      this.collection.trigger("change:currentCharacter");
+      this.collection.setCurrent = this.model.id;
+    }
+  });
+
+  self.CharacterView = $b.View.extend({
+    tagName: "div",
+    initialize: function(options) {
+      this.setElement($('#character'));
+      this.infoView = new self.CharacterInfoView({model: this.model});
+      this.model.on("change", this.render, this);
+    },
+    render: function() {
+      this.$el.append(this.infoView.render().el);
+      return this;
+    }
+  });
+
+  self.CharacterInfoView = $b.View.extend({
+    initialize: function() {
+      this.template = app.templates['character_info'];
+    },
+    render: function() {
+      $(this.el).html(this.template(this.model.toJSON()));
+      return this;
     }
   });
 

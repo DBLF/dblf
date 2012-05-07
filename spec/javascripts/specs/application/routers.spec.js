@@ -16,7 +16,7 @@ describe("routers", function() {
     });
   });
 
-  describe('routes', function() {
+  describe('DBLF router', function() {
     setupRouter();
 
     describe('/', function() {
@@ -25,7 +25,7 @@ describe("routers", function() {
         spec.currentRouter.navigate("", navigation_options);
       });
 
-      it("routes to index", function() {
+      it("routes to the index method", function() {
         expect(spec.ajaxSpy.called).toBeTruthy();
       });
 
@@ -37,16 +37,16 @@ describe("routers", function() {
     describe('/characters/:id', function() {
       beforeEach(function() {
         spec.currentRouter.on("route:show", spec.ajaxSpy);
-        spec.currentRouter.navigate("characters/1", navigation_options);
+        spec.currentRouter.navigate("/characters/200", navigation_options);
       });
 
-      it("routes to show", function() {
+      it("routes to the show action", function() {
         expect(spec.ajaxSpy.called).toBeTruthy();
       });
 
-      // it("fetches character data", function() {
-      //   expect(spec.ajaxSpy.getCall(0).args[0].url).toEqual('/api/characters/1');
-      // });
+      it("fetches character data", function() {
+        expect(spec.ajaxSpy.getCall(1).args[0].url).toEqual('/api/characters/200');
+      });
     });
   });
 });

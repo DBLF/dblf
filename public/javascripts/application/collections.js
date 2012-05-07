@@ -7,6 +7,10 @@ $.namespace("app.collections");
     model: app.models.Character,
     comparator: function(character) {
       return character.get('name');
+    },
+    setCurrent: function(id) {
+      this.currentCharacterId = id;
+      this.trigger("change:currentCharacterId");
     }
   });
 
