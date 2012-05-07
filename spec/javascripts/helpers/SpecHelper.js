@@ -34,12 +34,12 @@ function initializeBackboneHistory() {
 
 function fakeAjax() {
   beforeEach(function() {
+    delete spec.fakeAjax;
     spec.fakeAjax = sinon.fakeServer.create();
   });
 
   afterEach(function() {
     spec.fakeAjax.restore();
-    delete spec.fakeAjax;
   });
 }
 
@@ -69,7 +69,7 @@ function setupRouter() {
   beforeEach(function() {
     spec.currentRouter = app.routers.init();
     try {
-      Backbone.history.start({silent: true, pushState: true});
+      Backbone.history.start({silent: true, pushState: false});
     } catch (e) {
     }
     spec.currentRouter.navigate("unmatched route");
@@ -77,36 +77,36 @@ function setupRouter() {
 
   afterEach(function() {
     spec.currentRouter.navigate("");
-    delete spec.currentRouter;
   });
 }
 
 function defineFixture(html) {
+  html == undefined && (html = "<ul id='characters'/>");
   beforeEach(function() {
-    setFixtures("<ul id='characters'/>");
+    setFixtures(html);
   });
 }
 
 function respondTo(api, method) {
-  this.api = api;
-  this.method = method || "GET";
+  api = api;
+  method = method || "GET";
 
   this.with = function(json, status, headers) {
     status = status || 200;
     headers = headers || {};
-    spec.fakeAjax.respondWith(this.method, this.api, [status, headers, json]);
+    spec.fakeAjax.respondWith(method, api, [status, headers, json]);
   };
 
   return this;
 };
 
 function fakeAjaxFor(api, method) {
-  this.api = api;
-  this.method = method;
+  api = api;
+  method = method || "GET";
 
   this.on = function(route) {
     this.route = route;
-    this._on_called = true;
+    _on_called = true;
     return this.go();
   }
 
@@ -114,7 +114,7 @@ function fakeAjaxFor(api, method) {
     this.json = json;
     this.status = status;
     this.headers = headers;
-    this._with_called = true;
+    _with_called = true;
     return this.go();
   }
 
@@ -132,6 +132,6 @@ function fakeAjaxFor(api, method) {
     return this;
   }
 
-  return this.go();
+  return go();
 }
 
