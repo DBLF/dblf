@@ -39,6 +39,7 @@ function fakeAjax() {
 
   afterEach(function() {
     spec.fakeAjax.restore();
+    delete spec.fakeAjax;
   });
 }
 
@@ -75,6 +76,7 @@ function setupRouter() {
   });
 
   afterEach(function() {
+    spec.currentRouter.navigate("");
     delete spec.currentRouter;
   });
 }
@@ -84,3 +86,52 @@ function defineFixture(html) {
     setFixtures("<ul id='characters'/>");
   });
 }
+
+function respondTo(api, method) {
+  this.api = api;
+  this.method = method || "GET";
+
+  this.with = function(json, status, headers) {
+    status = status || 200;
+    headers = headers || {};
+    spec.fakeAjax.respondWith(this.method, this.api, [status, headers, json]);
+  };
+
+  return this;
+};
+
+function fakeAjaxFor(api, method) {
+  this.api = api;
+  this.method = method;
+
+  this.on = function(route) {
+    this.route = route;
+    this._on_called = true;
+    return this.go();
+  }
+
+  this.with = function(json, status, headers) {
+    this.json = json;
+    this.status = status;
+    this.headers = headers;
+    this._with_called = true;
+    return this.go();
+  }
+
+  this.go = function() {
+    if (this._on_called && this._with_called) {
+      fakeAjax();
+      setupRouter();
+
+      beforeEach(function() {
+        respondTo(api, method).with(json, status, headers);
+        spec.currentRouter.navigate(route, true);
+        spec.fakeAjax.respond();
+      });
+    }
+    return this;
+  }
+
+  return this.go();
+}
+

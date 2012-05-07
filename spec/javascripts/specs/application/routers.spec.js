@@ -29,7 +29,7 @@ describe("routers", function() {
         expect(spec.ajaxSpy.called).toBeTruthy();
       });
 
-      it("fetches character data", function() {
+      it("fetches character list", function() {
         expect(spec.ajaxSpy.getCall(0).args[0].url).toEqual('/api/characters');
       });
     });
@@ -43,6 +43,10 @@ describe("routers", function() {
       it("routes to show", function() {
         expect(spec.ajaxSpy.called).toBeTruthy();
       });
+
+      // it("fetches character data", function() {
+      //   expect(spec.ajaxSpy.getCall(0).args[0].url).toEqual('/api/characters/1');
+      // });
     });
   });
 });
