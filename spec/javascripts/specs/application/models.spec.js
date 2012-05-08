@@ -9,8 +9,6 @@ describe("models", function() {
     var character;
 
     describe('properties', function() {
-      stubAjax();
-
       beforeEach(function() {
         character = new app.models.Character();
       });

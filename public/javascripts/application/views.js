@@ -42,21 +42,54 @@ $.namespace("app.views");
   });
 
   self.CharacterView = $b.View.extend({
-    tagName: "div",
     initialize: function(options) {
       this.setElement($('#character'));
-      this.infoView = new self.CharacterInfoView({model: this.model});
+      this.subViews = [
+        new self.CharacterMetadataView({model: this.model}),
+        new self.CharacterSkillsView({collection: this.model.skills})
+      ];
+      this.appendSubviews();
       this.model.on("change", this.render, this);
     },
+    appendSubviews: function() {
+      _.each(this.subViews, function(subView) {
+        this.$el.append(subView.render().el);
+      }, this);
+    },
     render: function() {
-      this.$el.append(this.infoView.render().el);
+      _.each(this.subViews, function(subView) {
+        subView.render();
+      }, this);
       return this;
     }
   });
 
-  self.CharacterInfoView = $b.View.extend({
+  self.CharacterMetadataView = $b.View.extend({
     initialize: function() {
-      this.template = app.templates['character_info'];
+      this.template = app.templates['character_metadata'];
+    },
+    render: function() {
+      $(this.el).html(this.template(this.model.toJSON()));
+      return this;
+    }
+  });
+
+  self.CharacterSkillsView = $b.View.extend({
+    tagName: "ul",
+    id: "skills",
+    render: function() {
+      this.collection.each(function(skill) {
+        var view = new self.CharacterSkillsListView({model: skill, collection: this.collection});
+        this.$el.append(view.render().el);
+      }, this);
+      return this;
+    }
+  });
+
+  self.CharacterSkillsListView = $b.View.extend({
+    tagName: "li",
+    initialize: function() {
+      this.template = app.templates['character_skill'];
     },
     render: function() {
       $(this.el).html(this.template(this.model.toJSON()));

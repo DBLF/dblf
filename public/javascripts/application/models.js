@@ -1,18 +1,24 @@
 $.namespace("app.models");
 
 (function($, self, $b) {
-  var Character = $b.Model.extend({
-    urlRoot: "/api/characters",
-    validate: function(attrs) {
-      var errors = [];
-      if (!attrs.name) {
-        errors.push("name cannot be empty");
+  self.extend({
+    Character : $b.Model.extend({
+      urlRoot: "/api/characters",
+      initialize: function() {
+        this.skills = new app.collections.Skills();
+        this.on('change', this.initializeNestedAttributes, this);
+      },
+      validate: function(attrs) {
+        var errors = [];
+        if (!attrs.name) errors.push("name cannot be empty");
+        if (errors.length > 0) return errors;
+      },
+      initializeNestedAttributes: function() {
+        this.skills.reset(this.get('skills'));
+        this.off('change', this.initializeNestedAttributes);
       }
-      if (errors.length > 0) return errors;
-    }
+    }),
+    Skill : $b.Model.extend()
   });
 
-  self.extend({
-    Character: Character
-  });
 })(jQuery, window.app.models, window.Backbone)
