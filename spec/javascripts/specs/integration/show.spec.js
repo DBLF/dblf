@@ -3,7 +3,11 @@ feature('show page', function() {
     "name":"dude",
     "id":1,
     "skills":[
-      {"name":"thing","value":25}
+      {"name":"thing", "value":25}
+    ],
+    "merits":[
+      {"name":"my merit", "value":1},
+      {"name":"my flaw", "value":-1}
     ]
   };
 
@@ -27,6 +31,12 @@ feature('show page', function() {
       expect($('#skills')).toExist();
       expect($('#skills')).toContainSelector('li:contains(thing):contains(25)')
     });
-  });
 
+    describe('merits', function() {
+      scenario("should list character merits", function() {
+        expect($('#merits')).toExist();
+        expect($('#merits')).toContainSelector('li:contains(my merit):contains(1)')
+      });
+    });
+  });
 });

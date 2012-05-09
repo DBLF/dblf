@@ -46,7 +46,8 @@ $.namespace("app.views");
       this.setElement($('#character'));
       this.subViews = [
         new self.CharacterMetadataView({model: this.model}),
-        new self.CharacterSkillsView({collection: this.model.skills})
+        new self.CharacterSkillsView({collection: this.model.skills}),
+        new self.CharacterMeritsView({collection: this.model.merits})
       ];
       this.appendSubviews();
       this.model.on("change", this.render, this);
@@ -74,27 +75,39 @@ $.namespace("app.views");
     }
   });
 
-  self.CharacterSkillsView = $b.View.extend({
+  self.ListView = $b.View.extend({
     tagName: "ul",
-    id: "skills",
+    itemTemplate: 'list_view',
     render: function() {
-      this.collection.each(function(skill) {
-        var view = new self.CharacterSkillsListView({model: skill, collection: this.collection});
+      this.collection.each(function(model) {
+        var view = new self.ListItemView({model: model, collection: this.collection, templateName: this.itemTemplate});
         this.$el.append(view.render().el);
       }, this);
       return this;
     }
   });
 
-  self.CharacterSkillsListView = $b.View.extend({
+  self.ListItemView = $b.View.extend({
     tagName: "li",
+    templateName: 'list_view',
     initialize: function() {
-      this.template = app.templates['character_skill'];
+      if (this.options.templateName) this.templateName = this.options.templateName;
+      this.template = app.templates[this.templateName];
     },
     render: function() {
       $(this.el).html(this.template(this.model.toJSON()));
       return this;
     }
+  });
+
+  self.CharacterSkillsView = self.ListView.extend({
+    id: "skills",
+    itemTemplate: 'character_skill'
+  });
+
+  self.CharacterMeritsView = self.ListView.extend({
+    id: 'merits',
+    itemTemplate: 'character_skill'
   });
 
   self.AddView = $b.View.extend({

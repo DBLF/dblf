@@ -18,6 +18,10 @@ $.namespace("app.collections");
 
     Skills : $b.Collection.extend({
       model: app.models.Skill
+    }),
+
+    Merits : $b.Collection.extend({
+      model: app.models.Merit
     })
   });
 
